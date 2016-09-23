@@ -5,6 +5,9 @@ num_of_columns = 7
 num_of_rows = 6
 check_length = 4
 
+# rows count goes from bottom to top
+# columns count goes from left to right
+
 class gameboard():
     def __init__(self):
         self.columns = []
@@ -48,6 +51,11 @@ class gameboard():
     def check_diagnonal(self):
         return False
 
+    def print_col(self, i):
+        assert i>=0 and i<= num_of_columns
+        s = self.column2string(i)
+        print s
+
     def print_row(self, i):
         assert i>=0 and i<= num_of_rows
         s = self.row2string(i)
@@ -89,6 +97,14 @@ if __name__ == "__main__":
     for _ in range(0, num_of_rows):
         for c in range(0, num_of_columns):
             disc = randomdraw()
-            print "dropping disc {0} on column {1}".format(disc, c)
+            #print "dropping disc {0} on column {1}".format(disc, c)
             gb.drop_disc(c, disc)
-            gb.print_gameboard()
+            
+    gb.print_gameboard()
+    for c in range(0, num_of_columns):
+        print "printing col {0} (rotated)".format(c)
+        gb.print_col(c)
+
+    for r in range(0, num_of_rows):
+        print "printing row {0}".format(r)
+        gb.print_row(r)
