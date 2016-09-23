@@ -4,7 +4,6 @@ import sys
 
 num_of_columns = 7
 num_of_rows = 6
-check_length = 4
 
 # rows count goes from bottom to top
 # columns count goes from left to right
@@ -68,8 +67,36 @@ class gameboard():
         except:
             e = None
         
+    def diag2string(self, x, y):
+        chars = []
+        i, j = x,y
+        done = False
+        try:
+            while not done:
+                c = self.get_xy(i,j)
+                if c:
+                    chars.append(c)
+                    i += 1
+                    j += 1
+                else:
+                    done = True
+        except:
+            pass
+        s = ''.join(chars)
+        return s
+
     # check where there is a hit on diagonal
     def check_diagnonal(self):
+        for c in range(0, num_of_columns):
+            s = self.diag2string(c, 0)
+            if 'oooo' in s or 'xxxx' in s:
+                print "diag {0},{1} bingo!".format(c, 0)
+                return True
+        for r in range(0, num_of_rows):
+            s = self.diag2string(0, r)
+            if 'oooo' in s or 'xxxx' in s:
+                print "diag {0},{1} bingo!".format(0, r)
+                return True
         return False
 
     def print_col(self, i):
@@ -83,6 +110,7 @@ class gameboard():
         print s
 
     def print_gameboard(self):
+        print "----------------------"
         l = list(reversed(range(num_of_rows)))
         for r in l:
             self.print_row(r)
