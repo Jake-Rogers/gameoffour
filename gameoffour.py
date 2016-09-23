@@ -1,5 +1,6 @@
 
 import random
+import sys
 
 num_of_columns = 7
 num_of_rows = 6
@@ -41,12 +42,22 @@ class gameboard():
 
     # check whether there is a hit on a col
     def check_vertical(self, i):
-        return False
-
+        s = self.column2string(i)
+        if 'oooo' in s or 'xxxx' in s:
+            print "column {0} bingo!".format(i)
+            return True
+        else:
+            return False
+ 
     # check whether there is a hit on a row
-    def check_horizonta(self, i):
-        return False
-        
+    def check_horizontal(self, i):
+        s = self.row2string(i)
+        if 'oooo' in s or 'xxxx' in s:
+            print "row {0} bingo!".format(i)
+            return True
+        else:
+            return False
+            
     # check where there is a hit on diagonal
     def check_diagnonal(self):
         return False
@@ -69,14 +80,14 @@ class gameboard():
     # check if there is a hit
     def check_four(self):
         for i in range(0, num_of_columns):
-            if check_vertical(self, i):
+            if self.check_vertical(i):
                 return True
 
         for i in range(0, num_of_rows):
-            if check_horizontal(self, i):
+            if self.check_horizontal(i):
                 return True
 
-        if check_diagonal(self):
+        if self.check_diagnonal():
             return True
 
         return False
@@ -85,21 +96,19 @@ def randomdraw():
     return random.choice(['o','x'])
 
 if __name__ == "__main__":
-    gb = gameboard()
-
-    """
-    done = False
-    while not done:
-        disc = randomdraw()
-        print disc
-    """
     
+    gb = gameboard()
     for _ in range(0, num_of_rows):
         for c in range(0, num_of_columns):
             disc = randomdraw()
             #print "dropping disc {0} on column {1}".format(disc, c)
             gb.drop_disc(c, disc)
-            
+            gb.print_gameboard()
+            if gb.check_four():
+                print "we have a hit!!"
+                sys.exit(0)
+
+    """
     gb.print_gameboard()
     for c in range(0, num_of_columns):
         print "printing col {0} (rotated)".format(c)
@@ -108,3 +117,4 @@ if __name__ == "__main__":
     for r in range(0, num_of_rows):
         print "printing row {0}".format(r)
         gb.print_row(r)
+    """
