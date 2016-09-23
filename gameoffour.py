@@ -57,7 +57,17 @@ class gameboard():
             return True
         else:
             return False
-            
+    
+    # return ele of row x, col y
+    def get_xy(self, x, y):
+        assert x>=0 and x<num_of_columns
+        assert y>=0 and y<num_of_rows
+        e = None
+        try:
+            e = self.columns[x][y]
+        except:
+            e = None
+        
     # check where there is a hit on diagonal
     def check_diagnonal(self):
         return False
